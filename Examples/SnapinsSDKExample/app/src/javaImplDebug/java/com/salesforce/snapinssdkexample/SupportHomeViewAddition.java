@@ -138,7 +138,6 @@ public class SupportHomeViewAddition implements KnowledgeViewAddition{
         // Show an alert if any argument is invalid
         try {
             chatConfiguration = ServiceSDKUtils.getChatConfigurationBuilder(context)
-                    .preChatFields(buildPreChatFields())
                     .build();
         } catch (IllegalArgumentException e) {
             showConfigurationErrorAlertDialog(e.getMessage());
@@ -150,7 +149,7 @@ public class SupportHomeViewAddition implements KnowledgeViewAddition{
         final ChatSessionListener chatListener = serviceSDKApplication.getChatSessionListener();
 
         // Create the chat UI from the ChatUIConfiguration object
-        ChatUI.configure(ServiceSDKUtils.getChatUIConfigurationBuilder(context, chatConfiguration).build())
+        ChatUI.configure(ServiceSDKUtils.getChatUIConfigurationBuilder(context, chatConfiguration).disablePreChatView(true).build())
                 .createClient(context)
                 .onResult(new Async.ResultHandler<ChatUIClient>() {
                     @Override
