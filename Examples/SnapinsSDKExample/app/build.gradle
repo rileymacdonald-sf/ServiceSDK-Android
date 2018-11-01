@@ -66,7 +66,14 @@ dependencies {
     implementation "io.github.yavski:fab-speed-dial:$fab_speed_dial_version"
 
     // Salesforce SDKs
-    implementation "com.salesforce.service:servicesdk:${rootProject.ext.serviceSdkVersion}"
+//    implementation "com.salesforce.service:servicesdk:${rootProject.ext.serviceSdkVersion}"
+    implementation "com.salesforce.service:knowledge-ui:$serviceKnowledgeVersion"
+    implementation "com.salesforce.service:knowledge-core:$serviceKnowledgeVersion"
+    implementation "com.salesforce.service:case-ui:$serviceCaseVersion"
+    implementation "com.salesforce.service:case-core:$serviceCaseVersion"
+    implementation "com.salesforce.service:chat-ui:$serviceChatVersion"
+    implementation "com.salesforce.service:chat-core:$serviceChatVersion"
+    implementation "com.salesforce.service:sos:$serviceSosVersion"
 
     implementation "com.salesforce.mobilesdk:SalesforceSDK:${rootProject.ext.mobilesdkVersion}"
 }
