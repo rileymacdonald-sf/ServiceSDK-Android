@@ -117,7 +117,6 @@ class SupportHomeViewAddition: KnowledgeViewAddition {
         // Try to build a chat configuration, show an alert if any argument is invalid
         try {
             chatConfiguration = ServiceSDKUtils.getChatConfigurationBuilder(context)
-                    .preChatFields(buildPreChatFields())
                     .build()
         } catch (e: IllegalArgumentException) {
             showConfigurationErrorAlertDialog(e.message)
@@ -128,7 +127,8 @@ class SupportHomeViewAddition: KnowledgeViewAddition {
         val chatListener = serviceSDKApplication.chatSessionListener
 
         chatConfiguration?.let {
-            ChatUI.configure(ServiceSDKUtils.getChatUIConfigurationBuilder(context, it).build())
+            ChatUI.configure(ServiceSDKUtils.getChatUIConfigurationBuilder(context, it)
+                    .disablePreChatView(true).build())
                     .createClient(context)
                     .onResult { _, chatUIClient: ChatUIClient ->
                         run {

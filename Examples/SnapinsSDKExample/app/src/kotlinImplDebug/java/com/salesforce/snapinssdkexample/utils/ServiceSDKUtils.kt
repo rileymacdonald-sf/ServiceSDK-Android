@@ -18,6 +18,9 @@ import com.salesforce.snapinssdkexample.utils.Utils.getStringPref
 import com.salesforce.android.cases.core.CaseClientCallbacks
 import com.salesforce.android.cases.core.CaseConfiguration
 import com.salesforce.android.chat.core.ChatConfiguration
+import com.salesforce.android.chat.core.model.ChatEntity
+import com.salesforce.android.chat.core.model.ChatEntityField
+import com.salesforce.android.chat.core.model.ChatUserData
 import com.salesforce.android.chat.ui.ChatUIConfiguration
 import com.salesforce.android.knowledge.core.KnowledgeConfiguration
 import com.salesforce.android.knowledge.ui.KnowledgeUI
@@ -39,8 +42,20 @@ object ServiceSDKUtils {
      * Creates a chat configuration based on chat settings or uses sensible default values.
      */
     fun getChatConfigurationBuilder(context: Context): ChatConfiguration.Builder {
-        // Create a core configuration instance
-        return ChatConfiguration.Builder(
+        val subjectUserData = ChatUserData("Subject", "Subject Data", true)
+        val descriptionUserData = ChatUserData("Description", "Description Data", true)
+
+        val subjectEntity = ChatEntityField.Builder().doCreate(true).build("Subject", subjectUserData)
+        val descriptionEntity = ChatEntityField.Builder().doCreate(true).build("Description", descriptionUserData)
+
+        val caseEntity = ChatEntity.Builder()
+                .showOnCreate(true)
+                .linkToTranscriptField("CaseId")
+                .addChatEntityField(subjectEntity)
+                .addChatEntityField(descriptionEntity)
+                .build("Case")
+
+        val builder = ChatConfiguration.Builder(
                 getStringPref(context, ChatSettingsActivity.KEY_ORG_ID,
                         context.getString(R.string.pref_chat_org_id_default)),
                 getStringPref(context, ChatSettingsActivity.KEY_BUTTON_ID,
@@ -48,8 +63,12 @@ object ServiceSDKUtils {
                 getStringPref(context, ChatSettingsActivity.KEY_DEPLOYMENT_ID,
                         context.getString(R.string.pref_chat_deployment_id_default)),
                 getStringPref(context, ChatSettingsActivity.KEY_LIVE_AGENT_POD,
-                        context.getString(R.string.pref_chat_la_pod_default))
+                        context.getString(R.string.pref_chat_button_id_default))
         )
+
+        builder.chatUserData(subjectUserData, descriptionUserData).chatEntities(caseEntity)
+
+        return builder
     }
 
     /**
