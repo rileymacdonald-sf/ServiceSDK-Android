@@ -6,7 +6,7 @@
  */
 
 buildscript {
-    ext.kotlin_version = "1.2.71"
+    ext.kotlin_version = "1.3.11"
 
     repositories {
         google()
@@ -42,7 +42,7 @@ ext {
     fab_speed_dial_version = "1.0.6"
 
     // Android
-    appCompatV7SupportVersion = "27.1.1"
+    appCompatV7SupportVersion = "28.0.0"
 
     //Main resource dir
     mainResourceDir = ['main/res']
